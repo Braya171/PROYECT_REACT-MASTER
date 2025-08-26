@@ -12,7 +12,7 @@
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
-    background-color: #d4af37;
+    background-color: #4D96FF;
     color: #000;
     text-decoration: none;
 }
@@ -30,7 +30,7 @@
 }
 
 .logout-container .logout-link:hover {
-    background-color: #d4af37;
+    background-color: #4D96FF;
     color: #000;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .navbar-dark .dropdown-menu .dropdown-item:hover {
-    background-color: #d4af37;
+    background-color: #4D96FF;
     color: #000;
 }
 

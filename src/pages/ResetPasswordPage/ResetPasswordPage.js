@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import "./ResetPasswordPage.css";
-import logo from "../../assets/brilla.png";
+import logo from "../../assets/taller.png";
 import { confirmPasswordReset, getAuth } from "firebase/auth";
 import { useSearchParams } from "react-router-dom";
 
@@ -53,7 +53,7 @@ function ResetPasswordPage() {
             <div className="form-card">
                 <img
                     src={logo}
-                    alt="Logo Brilla"
+                    alt="Logo taller"
                     className="logo mb-3 mx-auto d-block"
                     style={{ width: "250px" }}
                 />
@@ -105,7 +105,7 @@ function ResetPasswordPage() {
                                 style={{
                                     backgroundColor: "#333",
                                     color: "#fff",
-                                    borderColor: match === false ? "#dc3545" : "#555",
+                                    borderColor: match === false ? "#3c14efff" : "#555",
                                 }}
                             />
                             <i

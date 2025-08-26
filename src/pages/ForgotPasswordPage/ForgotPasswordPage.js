@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import './ForgotPasswordPage.css';
-import logo from '../../assets/brilla.png';
+import logo from '../../assets/taller.png';
 import { auth } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 

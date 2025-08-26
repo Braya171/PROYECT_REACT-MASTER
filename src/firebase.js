@@ -4,12 +4,13 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCSoB5RsBrzriSfeRFqaVUfhKumJHLIMBA",
-    authDomain: "brillatlm.firebaseapp.com",
-    projectId: "brillatlm",
-    storageBucket: "brillatlm.firebasestorage.app",
-    messagingSenderId: "970081452395",
-    appId: "1:970081452395:web:5b44b77ca66fe4bf7f0c2e"
+apiKey: "AIzaSyCPdCQQbTYhLZblMznqKCCT2wLDicnIYe8",
+authDomain: "proyecto-1-598ba.firebaseapp.com",
+projectId: "proyecto-1-598ba",
+storageBucket: "proyecto-1-598ba.firebasestorage.app",
+messagingSenderId: "328271285517",
+appId: "1:328271285517:web:af5ec60c4e80341be4f444",
+measurementId: "G-P485X4WEL1"
 };
 
 // Inicializar Firebase

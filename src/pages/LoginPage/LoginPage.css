@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(135deg, #121212, #1e1e1e);
+    background: linear-gradient(135deg, #4A90E2, #1e1e1e);
     min-height: 100vh;
     font-family: 'Segoe UI', sans-serif;
     color: #fff;
@@ -19,7 +19,7 @@ body {
 }
 
 .form-card h3 {
-    color: #D4AF37;
+    color: #4D96FF;
     /* dorado sobrio */
     font-weight: bold;
 }
@@ -36,25 +36,25 @@ body {
 
 .form-control:focus {
     background: #2c2c2c;
-    border-color: #D4AF37;
-    box-shadow: 0 0 5px #D4AF37;
+    border-color: #4D96FF;
+    box-shadow: 0 0 5px #4D96FF;
     color: #fff;
 }
 
 .btn-primary {
-    background-color: #D4AF37;
+    background-color: #4D96FF;
     border: none;
     color: #121212;
     font-weight: bold;
 }
 
 .btn-primary:hover {
-    background-color: #b38f2f;
+    background-color: #042d65;
     color: #121212;
 }
 
 a {
-    color: #D4AF37;
+    color: #edeaea;
     text-decoration: none;
 }
 

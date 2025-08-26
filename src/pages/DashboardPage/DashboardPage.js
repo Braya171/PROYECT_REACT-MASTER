@@ -5,8 +5,8 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import logo from '../../assets/brilla.png';
-import userDefault from '../../assets/user.png'; 
+import logo from '../../assets/taller.png';
+import userDefault from '../../assets/usuario.avif'; 
 import './DashboardPage.css';
 import Swal from 'sweetalert2';
 
@@ -66,7 +66,7 @@ function DashboardPage() {
           <Navbar.Brand onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
             <img
               src={logo}
-              alt="Brilla Logo"
+              alt="taller Logo"
               height="40"
               className="d-inline-block align-top"
             />
@@ -105,7 +105,7 @@ function DashboardPage() {
       <main className="main-content">
         <div>
           <img src={logo} alt="Brilla Logo" className="main-logo" />
-          <h1 className="welcome-title">Welcome to Brilla System</h1>
+          <h1 className="welcome-title">Welcome to the mechanics workshop</h1>
           <p className="welcome-text">
             Manage your clients, services, and more efficiently!
           </p>
@@ -128,7 +128,7 @@ function DashboardPage() {
       {/* FOOTER */}
       <footer className="footer mt-auto">
         <div className="container">
-          <small>© 2025 Brilla. All rights reserved.</small>
+          <small>© 2025 Automotive Repair. All rights reserved.</small>
         </div>
       </footer>
     </>

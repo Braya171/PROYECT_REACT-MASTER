@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegisterPage from './pages/RegisterPage/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
-import NotFoundPage from  './pages/Components/NotFoundPage';
+import NotFoundPage from  './pages/components/NotFoundPage';
 
 // Rutas para hooks
 import UseStatePlay from './pages/Playground/UseStatePlay';
@@ -12,7 +12,7 @@ import UseEffectPlay from './pages/Playground/UseEffectPlay';
 import UseRefPlay from './pages/Playground/UseRefPlay';
 
 // Protege rutas con autenticación Firebase
-import ProtectedRoute from './pages/Components/ProtectedRoute';
+import ProtectedRoute from './pages/components/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import ResetPasswordPage from './pages/ResetPasswordPage/ResetPasswordPage';
 import AuxiliaresPage from './pages/AuxiliaresPage/AuxiliaresPage';
