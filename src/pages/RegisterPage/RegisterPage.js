@@ -79,7 +79,7 @@ function RegisterPage() {
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-gradient">
       <div className="form-card">
-        <img src={logo} alt="Logo Brilla" className="logo mb-3 d-block mx-auto" style={{ width: '120px' }} />
+        <img src={logo} alt="Logo taller" className="logo mb-3 d-block mx-auto" style={{ width: '120px' }} />
         <h3 className="mb-4 text-center">Registro de Usuario</h3>
         <form onSubmit={handleSubmit}>
 

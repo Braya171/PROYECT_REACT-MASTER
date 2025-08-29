@@ -45,7 +45,7 @@ function ForgotPasswordPage() {
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-gradient">
       <div className="form-card">
-        <img src={logo} alt="Logo de Brilla" className="logo mb-3" style={{ width: '250px' }} />
+        <img src={logo} alt="Logo taller" className="logo mb-3" style={{ width: '250px' }} />
         <h3 className="mb-4 text-center">Recuperar Contraseña</h3>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

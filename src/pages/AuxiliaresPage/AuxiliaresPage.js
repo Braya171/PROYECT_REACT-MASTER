@@ -102,7 +102,7 @@ function AuxiliaresPage() {
             <Navbar expand="lg" bg="dark" variant="dark" className="dashboard-navbar">
                 <Container>
                     <Navbar.Brand onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
-                        <img src={logo} alt="Brilla Logo" height="40" />
+                        <img src={logo} alt="Logo taller" height="40" />
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
@@ -196,7 +196,7 @@ function AuxiliaresPage() {
 
             <footer className="footer mt-auto">
                 <Container className="text-center">
-                    <small>© 2025 Brilla. All rights reserved.</small>
+                    <small>© 2025 Automotive Repair. All rights reserved.</small>
                 </Container>
             </footer>
 

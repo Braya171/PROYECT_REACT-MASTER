@@ -113,8 +113,10 @@ function LoginPage() {
           src={logo}
           alt="Logo de taller"
           className="logo mb-3 d-block mx-auto"
-          style={{ width: '250px' }}
+          style={{ width: '250px'  }}
         />
+
+
         <h3 className="mb-4 text-center">Iniciar Sesión</h3>
 
         <form onSubmit={handleSubmit}>
@@ -158,6 +160,7 @@ function LoginPage() {
               alt="Google logo"
               style={{ width: '20px', height: '20px' }}
             />
+
             Iniciar sesión con Google
           </button>
           <a href="/register">¿No tienes cuenta? Regístrate</a><br />

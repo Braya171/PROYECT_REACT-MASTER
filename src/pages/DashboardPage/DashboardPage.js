@@ -104,7 +104,7 @@ function DashboardPage() {
       {/* CONTENIDO PRINCIPAL */}
       <main className="main-content">
         <div>
-          <img src={logo} alt="Brilla Logo" className="main-logo" />
+          <img src={logo} alt="Logo taller" className="main-logo" />
           <h1 className="welcome-title">Welcome to the mechanics workshop</h1>
           <p className="welcome-text">
             Manage your clients, services, and more efficiently!
