@@ -1,7 +1,62 @@
-
-function Navbar(){
+import { useNavigate } from 'react-router-dom';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import logo from '../../assets/taller.png';
+import userDefault from '../../assets/usuario.avif'; 
+import Swal from 'sweetalert2';
+function NavbarPage(){
     
-      <Navbar expand="lg" variant="dark" className="dashboard-navbar">
+const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+
+  // Determinar foto de usuario
+  const userPhoto = user?.photoURL || userDefault;
+
+  // Agregamos el console.log para verificar qué foto se está usando
+  console.log(
+    user?.photoURL
+      ? "Usuario tiene foto: ${user.photoURL}"
+      : "Usuario SIN foto, se usará: ${userDefault}"
+  );
+
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Vas a cerrar sesión.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'No, quedarme',
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await signOut(auth);
+        sessionStorage.setItem("logout", "true"); 
+        Swal.fire({
+          icon: 'success',
+          title: 'Sesión cerrada',
+          text: '¡Has cerrado sesión exitosamente!',
+          timer: 2000,
+          showConfirmButton: false,
+        }).then(() => {
+          navigate('/');
+        });
+      } catch (error) {
+        console.error("Error al cerrar sesión:", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al cerrar sesión.',
+        });
+      }
+    }
+  };
+  return(
+    <Navbar expand="lg" variant="dark" className="dashboard-navbar">
         <Container>
           <Navbar.Brand onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
             <img
@@ -40,6 +95,8 @@ function Navbar(){
           </Navbar.Collapse>
         </Container>
       </Navbar>
+  );
+      
 };
 
-export default Navbar;
+export default NavbarPage;

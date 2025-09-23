@@ -9,6 +9,8 @@ import logo from '../../assets/taller.png';
 import userDefault from '../../assets/usuario.avif'; 
 import './DashboardPage.css';
 import Swal from 'sweetalert2';
+import NavBar from '../components/Navbar';
+import Footer from '../components/footer';
 
 function DashboardPage() {
   const navigate = useNavigate();
@@ -60,6 +62,7 @@ function DashboardPage() {
 
   return (
   <>
+    <NavBar/>
     {/* CONTENIDO PRINCIPAL */}
     <main className="main-content">
       <div>
@@ -83,7 +86,9 @@ function DashboardPage() {
         />
       </div>
     </main>
+    <Footer/>
   </>
+
 );
   
 }

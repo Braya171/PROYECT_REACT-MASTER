@@ -141,7 +141,7 @@ function AuxiliaresPage() {
             <main className="main-content">
                 <Container className="mt-4">
                     <h2 className="page-title text-center mb-4">
-                        AUXILIARES DE SERVICIOS REGISTRADOS EN BRILLA
+                        AUXILIARES DE SERVICIOS REGISTRADOS EN EL TALLER DE MECANICA DE MARCO
                     </h2>
                     <div className="table-container">
                         <Table striped bordered hover responsive className="tabla-auxiliares">
