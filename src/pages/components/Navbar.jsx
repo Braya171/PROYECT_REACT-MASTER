@@ -7,10 +7,11 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import logo from '../../assets/taller.png';
 import userDefault from '../../assets/usuario.avif'; 
 import Swal from 'sweetalert2';
+
 function NavbarPage(){
     
 const navigate = useNavigate();
-  const [user] = useAuthState(auth);
+const [user] = useAuthState(auth);
 
   // Determinar foto de usuario
   const userPhoto = user?.photoURL || userDefault;

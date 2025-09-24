@@ -55,9 +55,13 @@ function AuxiliaresPage() {
     };
 
     const handleEdit = (aux) => {
-        setSelectedAux(aux);
+        setSelectedAux({
+            ...aux,
+            edad: calcularEdad(aux.fechaNacimiento)
+        });
         setShowModal(true);
     };
+
 
     const handleSaveChanges = async () => {
         try {
@@ -87,14 +91,39 @@ function AuxiliaresPage() {
 
     const handleModalChange = (e) => {
         const { name, value } = e.target;
-        setSelectedAux({
-            ...selectedAux,
-            [name]: value
+    
+        setSelectedAux((prev) => {
+            const updated = { ...prev, [name]: value };
+    
+            if (name === 'fechaNacimiento') {
+                updated.edad = calcularEdad(value);
+            }
+    
+            return updated;
         });
     };
 
+
     // Foto de usuario (si está logueado)
     const user = auth.currentUser;
+
+    const calcularEdad = (fechaNacimiento) => {
+        if (!fechaNacimiento) return '';
+    
+        const hoy = new Date();
+        const fechaNac = new Date(fechaNacimiento);
+    
+        let edad = hoy.getFullYear() - fechaNac.getFullYear();
+        const mes = hoy.getMonth() - fechaNac.getMonth();
+        const dia = hoy.getDate() - fechaNac.getDate();
+    
+        if (mes < 0 || (mes === 0 && dia < 0)) {
+            edad--;
+        }
+    
+        return edad;
+    };
+
 
     return (
         <>
@@ -153,6 +182,7 @@ function AuxiliaresPage() {
                                     <th>Teléfono</th>
                                     <th>Email</th>
                                     <th>Fecha Nacimiento</th>
+                                    <th>Edad</th>
                                     <th>Sexo</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
@@ -167,6 +197,7 @@ function AuxiliaresPage() {
                                         <td>{aux.telefono}</td>
                                         <td>{aux.email}</td>
                                         <td>{aux.fechaNacimiento || '-'}</td>
+                                        <td>{aux.edad || '-'}</td>
                                         <td>{aux.sexo || '-'}</td>
                                         <td>{aux.estado || 'Pendiente'}</td>
                                         <td>
@@ -261,6 +292,15 @@ function AuxiliaresPage() {
                                     value={selectedAux.fechaNacimiento || ''}
                                     onChange={handleModalChange}
                                 />
+                                <Form.Group className="mb-2">
+                                    <Form.Label>Edad</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="edad"
+                                        value={selectedAux.edad}
+                                        readOnly
+                                    />
+                                </Form.Group>
                             </Form.Group>
                             <Form.Group className="mb-2">
                                 <Form.Label>Sexo</Form.Label>
