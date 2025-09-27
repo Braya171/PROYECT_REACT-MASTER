@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { auth, db } from '../../firebase';
 import { signOut } from 'firebase/auth';
 import './AuxiliaresPage.css';
-import logo from '../../assets/taller.png';
+import logo from '../../assets/auto.png';
 
 function AuxiliaresPage() {
     const navigate = useNavigate();

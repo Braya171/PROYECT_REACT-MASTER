@@ -4,7 +4,7 @@ import { auth, googleProvider, db } from '../../firebase';
 import { signInWithEmailAndPassword, fetchSignInMethodsForEmail, linkWithCredential, EmailAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import './LoginPage.css';
-import logo from '../../assets/taller.png';
+import logo from '../../assets/auto.png';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -112,7 +112,7 @@ function LoginPage() {
         <img
           src={logo}
           alt="Logo de taller"
-          className="logo mb-3 d-block mx-auto"
+          className="logo mb-3 d-block mx-auto "
           style={{ width: '250px'  }}
         />
 

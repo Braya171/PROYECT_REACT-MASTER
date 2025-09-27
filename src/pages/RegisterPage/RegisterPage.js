@@ -20,47 +20,109 @@ function RegisterPage() {
     confirmPassword: ''
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const [errors, setErrors] = useState({});
+
+  //Función para validar campo individual
+  const validateField = (name, value) => {
+    let errorMsg = "";
+
+    if (!value.trim()) {
+      return "Este campo es obligatorio";
+    }
+
+    switch (name) {
+      case "nombres":
+      case "apellidos":
+        if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
+          errorMsg = "Solo se permiten letras y espacios";
+        }
+        break;
+
+      case "cedula":
+        if (value.length < 7 || value.length > 10) {
+          errorMsg = "La cédula debe tener entre 7 y 10 dígitos";
+        }
+        break;
+
+      case "telefono":
+        if (!/^3[0-9]{9}$/.test(value)) {
+          errorMsg = "Debe tener 10 dígitos y empezar por 3";
+        }
+        break;
+
+      case "email":
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const forbiddenDomains = ["tempmail.com", "mailinator.com", "10minutemail.com"];
+        const domain = value.split("@")[1];
+        if (!emailRegex.test(value)) {
+          errorMsg = "Escribe un correo válido";
+        } else if (domain && forbiddenDomains.includes(domain)) {
+          errorMsg = "No se permiten correos temporales";
+        }
+        break;
+
+      case "password":
+        if (value.length < 8) {
+          errorMsg = "Debe tener al menos 8 caracteres";
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.])/.test(value)) {
+          errorMsg = "Debe incluir mayúsculas, minúsculas, números y símbolos";
+        }
+        break;
+
+      case "confirmPassword":
+        if (value !== formData.password) {
+          errorMsg = "Las contraseñas no coinciden";
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return errorMsg;
   };
 
+  // Validación en tiempo real
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    let newValue = value;
+
+    // Filtros de escritura
+    if (name === "nombres" || name === "apellidos") {
+      newValue = value.replace(/[^a-zA-ZÁÉÍÓÚáéíóúñÑ\s]/g, "");
+    }
+    if (name === "cedula" || name === "telefono") {
+      newValue = value.replace(/[^0-9]/g, "");
+    }
+
+    setFormData(prev => ({ ...prev, [name]: newValue }));
+
+    // validar en tiempo real
+    const errorMsg = validateField(name, newValue);
+    setErrors(prev => ({ ...prev, [name]: errorMsg }));
+  };
+
+  // Validar todo antes de enviar
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones
-    for (const key in formData) {
-      if (formData[key] === '') {
-        Swal.fire("Campos incompletos", "Por favor llena todos los campos.", "warning");
-        return;
-      }
-    }
+    const newErrors = {};
+    Object.keys(formData).forEach(key => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
+    });
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      Swal.fire("Correo inválido", "Escribe un correo válido.", "error");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      Swal.fire("Contraseña", "Las contraseñas no coinciden.", "error");
-      return;
-    }
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
-      // Guardar datos adicionales en Firestore
       await setDoc(doc(db, 'usuarios', user.uid), {
-        cedula: formData.cedula,
-        nombres: formData.nombres,
-        apellidos: formData.apellidos,
-        fechaNacimiento: formData.fechaNacimiento,
-        sexo: formData.sexo,
-        telefono: formData.telefono,
-        email: formData.email,
-        estado: 'pendiente'  // campo para activar o desactivar luego
+        ...formData,
+        estado: 'pendiente'
       });
 
       Swal.fire("¡Registro exitoso!", "Usuario registrado correctamente.", "success").then(() => {
@@ -68,7 +130,7 @@ function RegisterPage() {
       });
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
-        Swal.fire("Error", "Este correo ya está registrado.", "error");
+        setErrors(prev => ({ ...prev, email: "Este correo ya está registrado" }));
       } else {
         console.error(error);
         Swal.fire("Error", "No se pudo registrar el usuario.", "error");
@@ -81,33 +143,44 @@ function RegisterPage() {
       <div className="form-card">
         <img src={logo} alt="Logo taller" className="logo mb-3 d-block mx-auto" style={{ width: '120px' }} />
         <h3 className="mb-4 text-center">Registro de Usuario</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
 
+          {/* Nombres */}
           <div className="mb-3">
             <label className="form-label">Nombres</label>
             <input type="text" className="form-control" name="nombres" value={formData.nombres} onChange={handleChange} placeholder="Tus nombres" />
+            {errors.nombres && <small className="text-danger">{errors.nombres}</small>}
           </div>
 
+          {/* Apellidos */}
           <div className="mb-3">
             <label className="form-label">Apellidos</label>
             <input type="text" className="form-control" name="apellidos" value={formData.apellidos} onChange={handleChange} placeholder="Tus apellidos" />
+            {errors.apellidos && <small className="text-danger">{errors.apellidos}</small>}
           </div>
 
+          {/* Cédula */}
           <div className="mb-3">
             <label className="form-label">Cédula</label>
             <input type="text" className="form-control" name="cedula" value={formData.cedula} onChange={handleChange} placeholder="Tu cédula" />
+            {errors.cedula && <small className="text-danger">{errors.cedula}</small>}
           </div>
 
+          {/* Fecha de nacimiento */}
           <div className="mb-3">
             <label className="form-label">Fecha de Nacimiento</label>
             <input type="date" className="form-control" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} />
+            {errors.fechaNacimiento && <small className="text-danger">{errors.fechaNacimiento}</small>}
           </div>
 
+          {/* Teléfono */}
           <div className="mb-3">
             <label className="form-label">Teléfono</label>
             <input type="tel" className="form-control" name="telefono" value={formData.telefono} onChange={handleChange} placeholder="Ej: 3001234567" />
+            {errors.telefono && <small className="text-danger">{errors.telefono}</small>}
           </div>
 
+          {/* Sexo */}
           <div className="mb-3">
             <label className="form-label">Sexo</label>
             <div className="d-flex gap-3">
@@ -120,21 +193,28 @@ function RegisterPage() {
                 <label className="form-check-label">Femenino</label>
               </div>
             </div>
+            {errors.sexo && <small className="text-danger">{errors.sexo}</small>}
           </div>
 
+          {/* Correo */}
           <div className="mb-3">
             <label className="form-label">Correo Electrónico</label>
             <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} placeholder="tucorreo@ejemplo.com" />
+            {errors.email && <small className="text-danger">{errors.email}</small>}
           </div>
 
+          {/* Contraseña */}
           <div className="mb-3">
             <label className="form-label">Contraseña</label>
             <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} placeholder="Escribe tu contraseña" />
+            {errors.password && <small className="text-danger">{errors.password}</small>}
           </div>
 
+          {/* Confirmar contraseña */}
           <div className="mb-3">
             <label className="form-label">Repetir Contraseña</label>
             <input type="password" className="form-control" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirma tu contraseña" />
+            {errors.confirmPassword && <small className="text-danger">{errors.confirmPassword}</small>}
           </div>
 
           <div className="d-grid gap-2">
