@@ -67,7 +67,7 @@ a:hover {
     margin: 0 auto 1.5rem auto;
     width: 220px;
     height: auto;
-    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+    filter: drop-shadow(0 0 10px rgba(55, 86, 245, 0.5));
 }
 
 .form-control::placeholder {

@@ -22,7 +22,7 @@ function RegisterPage() {
 
   const [errors, setErrors] = useState({});
 
-  //Función para validar campo individual
+  // ✅ Función para validar campo individual
   const validateField = (name, value) => {
     let errorMsg = "";
 
@@ -33,8 +33,11 @@ function RegisterPage() {
     switch (name) {
       case "nombres":
       case "apellidos":
-        if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/.test(value)) {
-          errorMsg = "Solo se permiten letras y espacios";
+        // Valida letras, espacios, y al menos 2 caracteres
+        if (!/^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]{2,}$/.test(value)) {
+          errorMsg = "Debe escribir un nombre válido (solo letras y al menos 2 caracteres)";
+        } else if (/^\s/.test(value)) {
+          errorMsg = "No puede iniciar con espacio";
         }
         break;
 
@@ -82,28 +85,31 @@ function RegisterPage() {
     return errorMsg;
   };
 
-  // Validación en tiempo real
+  // ✅ Validación en tiempo real
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     let newValue = value;
 
-    // Filtros de escritura
+    // ✅ Filtros de escritura
     if (name === "nombres" || name === "apellidos") {
-      newValue = value.replace(/[^a-zA-ZÁÉÍÓÚáéíóúñÑ\s]/g, "");
+      newValue = value
+        .replace(/[^a-zA-ZÁÉÍÓÚáéíóúñÑ\s]/g, "") // Solo letras y espacios
+        .replace(/\s{2,}/g, " ") // Evita espacios dobles
+        .replace(/^\s/, ""); // Elimina espacio al inicio
     }
+
     if (name === "cedula" || name === "telefono") {
-      newValue = value.replace(/[^0-9]/g, "");
+      newValue = value.replace(/[^0-9]/g, ""); // Solo números
     }
 
     setFormData(prev => ({ ...prev, [name]: newValue }));
 
-    // validar en tiempo real
+    // ✅ Validar en tiempo real
     const errorMsg = validateField(name, newValue);
     setErrors(prev => ({ ...prev, [name]: errorMsg }));
   };
 
-  // Validar todo antes de enviar
+  // ✅ Validar todo antes de enviar
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -148,35 +154,69 @@ function RegisterPage() {
           {/* Nombres */}
           <div className="mb-3">
             <label className="form-label">Nombres</label>
-            <input type="text" className="form-control" name="nombres" value={formData.nombres} onChange={handleChange} placeholder="Tus nombres" />
+            <input
+              type="text"
+              className="form-control"
+              name="nombres"
+              value={formData.nombres}
+              onChange={handleChange}
+              placeholder="Tus nombres"
+            />
             {errors.nombres && <small className="text-danger">{errors.nombres}</small>}
           </div>
 
           {/* Apellidos */}
           <div className="mb-3">
             <label className="form-label">Apellidos</label>
-            <input type="text" className="form-control" name="apellidos" value={formData.apellidos} onChange={handleChange} placeholder="Tus apellidos" />
+            <input
+              type="text"
+              className="form-control"
+              name="apellidos"
+              value={formData.apellidos}
+              onChange={handleChange}
+              placeholder="Tus apellidos"
+            />
             {errors.apellidos && <small className="text-danger">{errors.apellidos}</small>}
           </div>
 
           {/* Cédula */}
           <div className="mb-3">
             <label className="form-label">Cédula</label>
-            <input type="text" className="form-control" name="cedula" value={formData.cedula} onChange={handleChange} placeholder="Tu cédula" />
+            <input
+              type="text"
+              className="form-control"
+              name="cedula"
+              value={formData.cedula}
+              onChange={handleChange}
+              placeholder="Tu cédula"
+            />
             {errors.cedula && <small className="text-danger">{errors.cedula}</small>}
           </div>
 
           {/* Fecha de nacimiento */}
           <div className="mb-3">
             <label className="form-label">Fecha de Nacimiento</label>
-            <input type="date" className="form-control" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} />
+            <input
+              type="date"
+              className="form-control"
+              name="fechaNacimiento"
+              value={formData.fechaNacimiento}
+              onChange={handleChange}
+            />
             {errors.fechaNacimiento && <small className="text-danger">{errors.fechaNacimiento}</small>}
           </div>
 
           {/* Teléfono */}
           <div className="mb-3">
             <label className="form-label">Teléfono</label>
-            <input type="tel" className="form-control" name="telefono" value={formData.telefono} onChange={handleChange} placeholder="Ej: 3001234567" />
+            <input
+              type="tel"
+              className="form-control"
+              name="telefono"
+              value={formData.telefono}
+              onChange={handleChange}
+              placeholder="Ej: 3001234567"
+            />
             {errors.telefono && <small className="text-danger">{errors.telefono}</small>}
           </div>
 
@@ -185,11 +225,25 @@ function RegisterPage() {
             <label className="form-label">Sexo</label>
             <div className="d-flex gap-3">
               <div className="form-check">
-                <input className="form-check-input" type="radio" name="sexo" value="Masculino" checked={formData.sexo === 'Masculino'} onChange={handleChange} />
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="sexo"
+                  value="Masculino"
+                  checked={formData.sexo === 'Masculino'}
+                  onChange={handleChange}
+                />
                 <label className="form-check-label">Masculino</label>
               </div>
               <div className="form-check">
-                <input className="form-check-input" type="radio" name="sexo" value="Femenino" checked={formData.sexo === 'Femenino'} onChange={handleChange} />
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="sexo"
+                  value="Femenino"
+                  checked={formData.sexo === 'Femenino'}
+                  onChange={handleChange}
+                />
                 <label className="form-check-label">Femenino</label>
               </div>
             </div>
@@ -199,21 +253,42 @@ function RegisterPage() {
           {/* Correo */}
           <div className="mb-3">
             <label className="form-label">Correo Electrónico</label>
-            <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} placeholder="tucorreo@ejemplo.com" />
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="tucorreo@ejemplo.com"
+            />
             {errors.email && <small className="text-danger">{errors.email}</small>}
           </div>
 
           {/* Contraseña */}
           <div className="mb-3">
             <label className="form-label">Contraseña</label>
-            <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} placeholder="Escribe tu contraseña" />
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Escribe tu contraseña"
+            />
             {errors.password && <small className="text-danger">{errors.password}</small>}
           </div>
 
           {/* Confirmar contraseña */}
           <div className="mb-3">
             <label className="form-label">Repetir Contraseña</label>
-            <input type="password" className="form-control" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} placeholder="Confirma tu contraseña" />
+            <input
+              type="password"
+              className="form-control"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirma tu contraseña"
+            />
             {errors.confirmPassword && <small className="text-danger">{errors.confirmPassword}</small>}
           </div>
 
